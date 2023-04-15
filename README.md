@@ -7,3 +7,5 @@ This web app allows the user to upload unlimited image files and convert them al
 It then displays the compression stats and packs the converted images in a downloadable .Zip folder.
 
 Open source and free for all. 
+
+Live app: https://bulk-compress.netlify.app

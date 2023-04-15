@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>BulkCompress</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="header">
+        <img
+          class="logo"
+          width="40px"
+          height="40px"
+          src="./assets/logo.png"
+          alt=""
+        />
+        <h1>BulkCompress</h1>
+      </div>
+      <h2><span>BULK</span> Image Compression Just Got Easier</h2>
+      <div class="upload">
+        <form>
+          <label class="label" for="imageUpload">Upload Images:</label>
+          <input type="file" id="imageUpload" name="imageUpload[]" multiple />
+        </form>
+        <!-- <br> -->
+        <div id="uploadInfo"></div>
+      </div>
+      <button id="convertButton">Convert to WebP</button>
+      <div id="conversionInfo"></div>
+      <a
+        href="#"
+        download="converted_images.zip"
+        id="downloadButton"
+        style="display: none"
+        >Download Converted Images</a
+      >
+
+      <svg
+        class="blobs blob1"
+        width="750px"
+        viewBox="0 0 600 600"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g transform="translate(300,300)">
+          <path
+            d="M120,-157.6C152.7,-141.5,174.3,-102.6,194.8,-58.8C215.3,-14.9,234.6,33.8,228.4,80.8C222.2,127.8,190.4,173.1,148.1,184C105.8,195,52.9,171.5,-2.4,174.8C-57.8,178.2,-115.6,208.4,-137.5,190.9C-159.3,173.3,-145.3,108,-153,56.3C-160.7,4.6,-190.2,-33.4,-178.3,-54.2C-166.4,-75.1,-113.2,-78.8,-76.6,-93.6C-40,-108.3,-20,-134.2,11.9,-150.5C43.7,-166.8,87.4,-173.6,120,-157.6Z"
+            fill="#FE840E"
+            fill-opacity="0.5"
+          />
+        </g>
+      </svg>
+      <svg
+        class="blobs blob2"
+        width="750px"
+        viewBox="0 0 600 600"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g transform="translate(300,300)">
+          <path
+            d="M120,-157.6C152.7,-141.5,174.3,-102.6,194.8,-58.8C215.3,-14.9,234.6,33.8,228.4,80.8C222.2,127.8,190.4,173.1,148.1,184C105.8,195,52.9,171.5,-2.4,174.8C-57.8,178.2,-115.6,208.4,-137.5,190.9C-159.3,173.3,-145.3,108,-153,56.3C-160.7,4.6,-190.2,-33.4,-178.3,-54.2C-166.4,-75.1,-113.2,-78.8,-76.6,-93.6C-40,-108.3,-20,-134.2,11.9,-150.5C43.7,-166.8,87.4,-173.6,120,-157.6Z"
+            fill="#FE840E"
+            fill-opacity="0.5"
+          />
+        </g>
+      </svg>
+      <svg
+        class="blobs blob3"
+        width="750px"
+        viewBox="0 0 600 600"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g transform="translate(300,300)">
+          <path
+            d="M120,-157.6C152.7,-141.5,174.3,-102.6,194.8,-58.8C215.3,-14.9,234.6,33.8,228.4,80.8C222.2,127.8,190.4,173.1,148.1,184C105.8,195,52.9,171.5,-2.4,174.8C-57.8,178.2,-115.6,208.4,-137.5,190.9C-159.3,173.3,-145.3,108,-153,56.3C-160.7,4.6,-190.2,-33.4,-178.3,-54.2C-166.4,-75.1,-113.2,-78.8,-76.6,-93.6C-40,-108.3,-20,-134.2,11.9,-150.5C43.7,-166.8,87.4,-173.6,120,-157.6Z"
+            fill="#FE840E"
+            fill-opacity="0.5"
+          />
+        </g>
+      </svg>
+
+      <!-- <img class="particles" src="./assets/particles.svg" alt=""> -->
+    </div>
+    <!-- <img class="vector2" src="./assets/vector 2.svg" alt="" />
+    <img class="vector1" src="./assets/vector 1.svg" alt="" /> -->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>

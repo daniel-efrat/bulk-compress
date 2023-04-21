@@ -1,6 +1,8 @@
 :root {
   --primary: #cc2c39;
   --secondary: #d14753;
+  --off-white: #e6e6e6;
+  --accent: #6b5b95;
 }
 
 /* General */
@@ -9,7 +11,7 @@ body {
   background: url(./images/pattern.png);
   background-repeat: repeat;
   background-size: 20px;
-  color: #fafafa;
+  color: var(--off-white);
   display: flex;
   flex-direction: column;
   font-family: Arial, sans-serif;
@@ -55,7 +57,7 @@ button {
   background-color: var(--primary);
   border: none;
   border-radius: 5px;
-  color: #e6e6e6;
+  color:var(--off-white);
   cursor: pointer;
   font-size: 16px;
   margin-top: 20px;
@@ -73,8 +75,8 @@ button {
 }
 
 button:hover {
-  background-color: #6b5b95;
-  color: #fafafa;
+  background-color: var(--accent);
+  color: var(--off-white);
 }
 #converted-images-list{
   text-align:start
@@ -126,14 +128,14 @@ h2 {
 a {
   background: var(--primary);
   border-radius: 5px;
-  color: #fafafa;
+  color: var(--off-white);
   padding: 0.5rem 1rem;
   text-decoration: none;
 }
 
 a:hover {
   text-decoration: underline;
-  background: #a348e8;
+  background: var(--accent);
 }
 
 /* List item */
@@ -142,8 +144,8 @@ li {
 }
 
 /* Vector */
-.vector1,
-.vector2 {
+#wave1,
+#wave2 {
   bottom: -6rem;
   position: absolute;
   z-index: -1;

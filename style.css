@@ -1,5 +1,6 @@
 :root {
   --primary: #cc2c39;
+  --secondary: #d14753;
 }
 
 /* General */
@@ -12,7 +13,7 @@ body {
   display: flex;
   flex-direction: column;
   font-family: Arial, sans-serif;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   justify-content: start;
   align-items: center;
@@ -20,7 +21,10 @@ body {
   text-align: center;
   position: relative;
 }
-
+#wave1, #wave2 {
+  position: absolute;
+  bottom:-100px
+}
 /* Blobs */
 .blobs {
   left: 0;
@@ -60,23 +64,25 @@ button {
   z-index: 4;
 }
 
+#download-button{
+  width: max-content;
+  margin-left:auto;
+  margin-right:auto;
+  margin-top: 20px;
+
+}
+
 button:hover {
   background-color: #6b5b95;
   color: #fafafa;
 }
-
-/* Conversion info list */
-#conversionInfo {
-  list-style: disc;
-  margin: 50px auto;
-  max-width: 500px;
-  overflow: auto;
-  padding: 0;
-  text-align: start;
-  z-index: 2;
+#converted-images-list{
+  text-align:start
 }
+/* Conversion info list */
 
-#downloadButton::after {
+
+#download-button::after {
   content: url(./images/download.svg);
   margin-left: 1rem;
 }
@@ -92,7 +98,11 @@ button:hover {
 .logo {
   margin-top: 1rem;
 }
-
+.progress-wrapper {
+  display:flex;
+  padding-left:30%;
+  padding-right:30%;
+}
 /* File list */
 #fileList {
   list-style: none;

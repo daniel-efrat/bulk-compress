@@ -1,14 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
     <title>BulkCompress</title>
-    ...
-    <link rel="icon" type="image/x-icon" href="/images/logo.ico" />
-    ...
+    <link rel="icon" type="image/x-icon" href="./images/favicon.ico" />
+    <style>
+      #progress-bar {
+        width: 0%;
+        height: 30px;
+        background-color: #4caf50;
+      }
+      #spinner {
+        display: none;
+      }
+      #download-button {
+        display: none;
+      }
+    </style>
   </head>
   <body>
     <div class="wrapper">
@@ -17,7 +28,7 @@
           class="logo"
           width="40px"
           height="40px"
-          src="/images/logo.png"
+          src="./images/logo.png"
           alt=""
         />
         <h1>BulkCompress</h1>
@@ -25,21 +36,19 @@
       <h2><span>BULK</span> Image Compression Just Got Easier</h2>
       <div class="upload">
         <form>
-          <label class="label" for="imageUpload">Upload Images:</label>
-          <input type="file" id="imageUpload" name="imageUpload[]" multiple />
+          <label class="label" for="input-files">Upload Images:</label>
+          <input type="file" id="input-files" name="imageUpload[]" multiple />
         </form>
         <!-- <br> -->
         <div id="uploadInfo"></div>
       </div>
-      <button id="convertButton">Convert to WebP</button>
-      <div id="conversionInfo"></div>
-      <a
-        href="#"
-        download="converted_images.zip"
-        id="downloadButton"
-        style="display: none"
-        >Download Converted Images</a
-      >
+      <button onclick="convertImagesToWebP()">Convert to WebP</button>
+      <div class="progress-wrapper">
+        <div id="progress-bar"></div>
+      </div>
+      <div id="spinner">Converting images...</div>
+      <div id="conversion-info"></div>
+      <a id="download-button">Download compressed files</a>
 
       <svg
         class="blobs blob1"
@@ -83,13 +92,189 @@
           />
         </g>
       </svg>
-
-      <!-- <img class="particles" src="./images/particles.svg" alt=""> -->
     </div>
-    <!-- <img class="vector2" src="./images/vector 2.svg" alt="" />
-    <img class="vector1" src="./images/vector 1.svg" alt="" /> -->
+    <ul id="converted-images-list"></ul>
+    <div id="conversionInfo"></div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-    <script src="script.js"></script>
+    <svg
+      id="wave2"
+      width="2524"
+      height="380"
+      viewBox="0 0 2524 380"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M787 135.933C447 50.4334 306.5 53.9332 -19 214.933V614.433H2523.5V178.933C2523.5 178.933 2237.75 173.404 2149.5 157.933C2024 135.933 1696.5 0 1549.5 0C1344.09 0 1127 221.433 787 135.933Z"
+        fill="var(--primary)"
+      />
+    </svg>
+    <svg
+      id="wave1"
+      width="2519"
+      height="337"
+      viewBox="0 0 2519 337"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M983 78.3286C751 28.2257 314 139 -19 94.5V588.5H2519V0.5C2394.5
+      47.5 2213.5 94.5 2069 94.5C1932.93 94.5 1273 140.957 983 78.3286Z"
+      fill="var(--secondary)""/>
+    </svg>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.3.0/jszip.min.js"></script>
+    <!-- <script src="test.js"></script> -->
+    <script>
+      const progressBar = document.getElementById("progress-bar")
+      const spinner = document.getElementById("spinner")
+      const conversionInfo = document.getElementById("conversion-info")
+      const downloadButton = document.getElementById("download-button")
+
+      async function convertImagesToWebP() {
+        const inputFiles = document.getElementById("input-files")
+        const imageFiles = [...inputFiles.files].filter((file) =>
+          file.type.startsWith("image/")
+        )
+        if (imageFiles.length === 0) {
+          alert("Please select at least one image file.")
+          return
+        }
+        downloadButton.style.display = "none"
+        const convertedImagesList = document.getElementById(
+          "converted-images-list"
+        )
+        convertedImagesList.innerHTML = ""
+        await convertToWebPAndDownloadAsZip(imageFiles, convertedImagesList)
+      }
+
+      async function convertToWebPAndDownloadAsZip(
+        imageFiles,
+        convertedImagesList
+      ) {
+        const zip = new JSZip()
+        const dataURLs = await convertImagesToDataURLs(
+          imageFiles,
+          (progress) => {
+            progressBar.style.width = `${progress}%`
+          }
+        )
+        spinner.style.display = "block"
+        let totalOriginalSize = 0
+        let totalCompressedSize = 0
+        const promises = []
+        for (let i = 0; i < dataURLs.length; i++) {
+          const promise = (async () => {
+            const dataURL = dataURLs[i]
+            const webPDataURL = await convertToWebP(dataURL)
+            const originalSize = getFileSize(dataURL)
+            const compressedSize = getFileSize(webPDataURL)
+            const reduction = Math.round(
+              ((originalSize - compressedSize) / originalSize) * 100
+            )
+            totalOriginalSize += originalSize
+            totalCompressedSize += compressedSize
+            const fileName =
+              imageFiles[i].name.replace(/\.[^/.]+$/, "") + ".webp"
+            zip.file(fileName, webPDataURL.split(",")[1], { base64: true })
+            const progress = Math.round(((i + 1) / dataURLs.length) * 100)
+            progressBar.style.width = `${progress}%`
+            conversionInfo.innerHTML = `Converting ${
+              imageFiles.length
+            } images to WebP... ${i + 1}/${imageFiles.length} (${formatBytes(
+              compressedSize
+            )} / ${reduction}% reduction)`
+            const listItem = document.createElement("li")
+            listItem.innerHTML = `${fileName} (${formatBytes(
+              originalSize
+            )} &rarr; ${formatBytes(compressedSize)}, ${reduction}% reduction)`
+            convertedImagesList.appendChild(listItem)
+          })()
+          promises.push(promise)
+        }
+        await Promise.all(promises)
+        const totalReduction = Math.round(
+          ((totalOriginalSize - totalCompressedSize) / totalOriginalSize) * 100
+        )
+        const listTotalItem = document.createElement("li")
+        listTotalItem.innerHTML = `<strong>Total:</strong> ${
+          dataURLs.length
+        } images (${formatBytes(totalOriginalSize)} &rarr; ${formatBytes(
+          totalCompressedSize
+        )}, ${totalReduction}% reduction)`
+        convertedImagesList.appendChild(listTotalItem)
+        conversionInfo.innerHTML =
+          "Conversion complete. Click the download button to download the compressed files."
+        const content = await zip.generateAsync({ type: "blob" })
+        const downloadUrl = URL.createObjectURL(content)
+        downloadButton.href = downloadUrl
+        downloadButton.download = "converted_images.zip"
+        downloadButton.style.display = "block"
+        progressBar.style.width = "0%"
+        spinner.style.display = "none"
+      }
+
+      function convertImagesToDataURLs(imageFiles, onProgress) {
+        return new Promise((resolve, reject) => {
+          const totalFiles = imageFiles.length
+          const dataURLs = []
+          let loadedFiles = 0
+          for (let i = 0; i < totalFiles; i++) {
+            const fileReader = new FileReader()
+            fileReader.readAsDataURL(imageFiles[i])
+            fileReader.onload = function () {
+              dataURLs[i] = fileReader.result
+              loadedFiles++
+              const progress = Math.round((loadedFiles / totalFiles) * 100)
+              onProgress(progress)
+              if (loadedFiles === totalFiles) {
+                resolve(dataURLs)
+              }
+            }
+            fileReader.onerror = function (error) {
+              reject(error)
+            }
+          }
+        })
+      }
+
+      async function convertToWebP(dataURL) {
+        return new Promise((resolve, reject) => {
+          const image = new Image()
+          image.src = dataURL
+          image.onload = function () {
+            const canvas = document.createElement("canvas")
+            canvas.width = image.width
+            canvas.height = image.height
+            canvas.getContext("2d").drawImage(image, 0, 0)
+            resolve(canvas.toDataURL("image/webp"))
+          }
+          image.onerror = function (error) {
+            reject(error)
+          }
+        })
+      }
+
+      function formatBytes(bytes, decimals = 2) {
+        if (bytes === 0) return "0 Bytes"
+        const k = 1024
+        const dm = decimals < 0 ? 0 : decimals
+        const sizes = ["Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB"]
+        const i = Math.floor(Math.log(bytes) / Math.log(k))
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i]
+      }
+
+      function getFileSize(dataURL) {
+        return getBase64Size(dataURL.split(",")[1])
+      }
+
+      function getBase64Size(base64String) {
+        const padding = "=".repeat((4 - (base64String.length % 4)) % 4)
+        const base64 = (base64String + padding)
+          .replace(/-/g, "+")
+          .replace(/_/g, "/")
+        const rawData = window.atob(base64)
+        return rawData.length
+      }
+    </script>
   </body>
 </html>

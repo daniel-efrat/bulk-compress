@@ -4,9 +4,6 @@
   --off-white: #e6e6e6;
   --accent: #6b5b95;
 }
-
-/* General */
-
 body {
   background: url(./images/pattern.png);
   background-repeat: repeat;
@@ -27,32 +24,25 @@ body {
   position: absolute;
   bottom:-100px
 }
-/* Blobs */
 .blobs {
   left: 0;
   margin: auto;
   position: absolute;
   right: 0;
   top: 60px;
-  /* bottom: 0; */
   z-index: -1;
 }
-
 .blob1 path {
   animation: blob1 44s linear infinite;
 }
-
 .blob2 path {
   animation: blob1 44s linear infinite;
   animation-delay: -15s;
 }
-
 .blob3 path {
   animation: blob1 44s linear infinite;
   animation-delay: -22s;
 }
-
-/* Button */
 button {
   background-color: var(--primary);
   border: none;
@@ -65,15 +55,17 @@ button {
   transition: background-color 0.3s ease-in-out;
   z-index: 4;
 }
-
 #download-button{
   width: max-content;
   margin-left:auto;
   margin-right:auto;
   margin-top: 20px;
-
+  background: var(--primary);
+  border-radius: 5px;
+  color: var(--off-white);
+  padding: 0.5rem 1rem;
+  text-decoration: none;
 }
-
 button:hover {
   background-color: var(--accent);
   color: var(--off-white);
@@ -81,14 +73,13 @@ button:hover {
 #converted-images-list{
   text-align:start
 }
-/* Conversion info list */
-
-
 #download-button::after {
   content: url(./images/download.svg);
   margin-left: 1rem;
 }
-
+#donate-button{
+  width: 150px;
+}
 .header {
   display: flex;
   align-items: center;
@@ -96,7 +87,6 @@ button:hover {
   gap: 1rem;
   width: 100vw;
 }
-
 .logo {
   margin-top: 1rem;
 }
@@ -105,7 +95,6 @@ button:hover {
   padding-left:30%;
   padding-right:30%;
 }
-/* File list */
 #fileList {
   list-style: none;
   margin: 0;
@@ -113,8 +102,6 @@ button:hover {
   overflow: auto;
   padding: 0;
 }
-
-/* Heading */
 h1 {
   font-size: 32px;
   margin-top: 50px;
@@ -123,27 +110,9 @@ h1 {
 h2 {
   font-weight: normal;
 }
-
-/* Link */
-a {
-  background: var(--primary);
-  border-radius: 5px;
-  color: var(--off-white);
-  padding: 0.5rem 1rem;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-  background: var(--accent);
-}
-
-/* List item */
 li {
   margin-bottom: 10px;
 }
-
-/* Vector */
 #wave1,
 #wave2 {
   bottom: -6rem;
@@ -166,6 +135,13 @@ input {
 span {
   font-weight: bold;
   text-decoration: underline;
+}
+.footer {
+  display: flex;
+  position: absolute;
+  bottom: 2rem;
+  align-items: center;
+  gap:2rem
 }
 @keyframes blob1 {
   0% {

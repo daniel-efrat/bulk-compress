@@ -122,6 +122,32 @@
       fill="var(--secondary)""/>
     </svg>
 
+    <div class="footer">
+
+      <a href="https://github.com/daniel-efrat/bulk-compress">
+        <img width="30px" height="30px" src="./images/github-mark/github-mark-white.svg" >
+      </a>
+      <div id="donate-button-container">
+<div id="donate-button"></div>
+<script src="https://www.paypalobjects.com/donate/sdk/donate-sdk.js" charset="UTF-8"></script>
+<script>
+PayPal.Donation.Button({
+env:'production',
+hosted_button_id:'HRGPH8Z2836CS',
+image: {
+src:'https://pics.paypal.com/00/s/YmY2Y2Y1NDQtZmQyNy00N2NmLTllMGYtYThiZjk2MGRmNjJk/file.PNG',
+alt:'Donate with PayPal button',
+title:'PayPal - The safer, easier way to pay online!',
+
+}
+}).render('#donate-button');
+</script>
+</div>
+
+      
+      
+    </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.3.0/jszip.min.js"></script>
     <!-- <script src="test.js"></script> -->
     <script>

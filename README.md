@@ -22,4 +22,4 @@ Image Converter is compatible with all modern web browsers, including Google Chr
 Image Converter is released under the [MIT License](https://opensource.org/licenses/MIT), which is a permissive free software license. This means that the software is provided as-is and can be used, modified, and distributed for both personal and commercial purposes without restriction, as long as the original copyright and license notice is included.
 
 
-Live app: [bulkcompress.netlify.app](bulkcompress.netlify.app)
+Live app: [bulk-compress.netlify.app](bulk-compress.netlify.app)
